@@ -31,11 +31,13 @@ jobs:
           echo "@avantodev:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
           echo "registry=https://registry.npmjs.org/" >> .npmrc
+          echo "ignore-scripts=true" >> .npmrc
+          echo "min-release-age=7" >> .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install -g npm@^11.10 && npm config get min-release-age && npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
